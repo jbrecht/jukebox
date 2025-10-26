@@ -40,4 +40,21 @@ export class AppComponent implements OnInit {
     this.currentlyPlaying = file;
     console.log('Playing:', file.name, 'from URL:', file.url);
   }
+
+  formatName(name: string): string {
+    return name
+      .replace(/[-_]/g, ' ')  // Replace hyphens and underscores with spaces
+      .replace(/\s+/g, ' ')   // Replace multiple spaces with single space
+      .trim();                // Remove leading/trailing spaces
+  }
+
+  formatFolderName(folderName: string): string {
+    return this.formatName(folderName.replace('/', ''));
+  }
+
+  formatFileName(fileName: string): string {
+    // Remove file extension and format the name
+    const nameWithoutExt = fileName.replace(/\.[^/.]+$/, '');
+    return this.formatName(nameWithoutExt);
+  }
 }

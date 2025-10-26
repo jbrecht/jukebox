@@ -1,7 +1,7 @@
 <div class="app">
   <header class="header">
     <div class="logo-container">
-      <h1><img src="assets/tasty-logo.png" alt="Tasty Logo" class="logo"><span>Jukebox</span></h1>
+      <h1><img src="assets/tasty-2.svg" alt="Tasty Logo" class="logo"><span>Jukebox</span></h1>
     </div>
   </header>
   
@@ -11,7 +11,7 @@
       @if (currentlyPlaying) {
         <div class="now-playing-info">
           <div class="now-playing-text">🎵 Now Playing</div>
-          <div class="song-title">{{ currentlyPlaying.name }}</div>
+          <div class="song-title">{{ formatFileName(currentlyPlaying.name) }}</div>
         </div>
         <audio #audioPlayer controls [src]="currentlyPlaying.url" class="audio-player">
           Your browser does not support the audio element.
@@ -36,7 +36,7 @@
                [class.selected]="selectedFolder?.prefix === folder.prefix"
                (click)="selectFolder(folder)">
             <div class="folder-icon">🎶</div>
-            <div class="folder-name">{{ folder.name.replace('/', '') }}</div>
+            <div class="folder-name">{{ formatFolderName(folder.name) }}</div>
           </div>
         }
       </div>
@@ -46,7 +46,7 @@
     <section class="content-area">
       @if (selectedFolder) {
         <div class="section-header">
-          <h2>🎵 {{ selectedFolder.name.replace('/', '') }} Tracks</h2>
+          <h2>🎵 {{ formatFolderName(selectedFolder.name) }} Tracks</h2>
           <div class="track-count">{{ files.length }} songs</div>
         </div>
         <div class="file-grid">
@@ -56,7 +56,7 @@
               <div class="track-info">
                 <div class="track-icon">🎵</div>
                 <div class="track-details">
-                  <div class="track-name" (click)="playFile(file)">{{ file.name }}</div>
+                  <div class="track-name" (click)="playFile(file)">{{ formatFileName(file.name) }}</div>
                   <div class="track-size">{{ s3Service.formatFileSize(file.size) }}</div>
                 </div>
               </div>
