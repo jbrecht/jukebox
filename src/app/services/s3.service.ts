@@ -78,7 +78,7 @@ export class S3Service {
       
       Array.from(commonPrefixes).forEach(prefixElement => {
         const prefixText = prefixElement.getElementsByTagName('Prefix')[0]?.textContent;
-        if (prefixText) {
+        if (prefixText && !prefixText.startsWith('assets/')) {
           folders.push({
             name: prefixText,
             prefix: prefixText
@@ -130,8 +130,8 @@ export class S3Service {
         const sizeText = contentElement.getElementsByTagName('Size')[0]?.textContent;
         const size = parseInt(sizeText || '0') || 0;
         
-        // Filter for .mp3 files and ignore the "folder" itself (size 0)
-        if (key && key.endsWith('.mp3') && size > 0) {
+        // Filter for .mp3 files, ignore the "folder" itself (size 0), and exclude assets folder
+        if (key && key.endsWith('.mp3') && size > 0 && !key.startsWith('assets/')) {
           const simpleName = key.replace(prefix, ''); // 'folder/song.mp3' -> 'song.mp3'
           
           // Construct the public URL
