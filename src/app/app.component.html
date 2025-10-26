@@ -1,0 +1,49 @@
+<div class="app">
+  <header class="header">
+    <div class="logo-container">
+      <img src="assets/tasty-logo.png" alt="Tasty Logo" class="logo">
+      <h1>Tasty Jukebox</h1>
+    </div>
+    <p>Browse and play music from your S3 bucket</p>
+  </header>
+  
+  <main class="main">
+    <section class="folders">
+      <h2>📁 Folders</h2>
+      <div class="folder-grid">
+        @for (folder of folders; track folder.prefix) {
+          <div class="folder-card" (click)="selectFolder(folder)">
+            {{ folder.name }}
+          </div>
+        }
+      </div>
+    </section>
+    
+    @if (selectedFolder) {
+      <section class="files">
+        <h2>🎵 Files in {{ selectedFolder.name }}</h2>
+        <div class="file-list">
+          @for (file of files; track file.key) {
+            <div class="file-item">
+              <span class="file-name" (click)="playFile(file)">{{ file.name }}</span>
+              <div class="file-actions">
+                <small>{{ s3Service.formatFileSize(file.size) }}</small>
+                <button class="play-btn" (click)="playFile(file)">▶️</button>
+                <a [href]="file.url" [download]="file.name" class="download-btn">⬇️</a>
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+    
+    @if (currentlyPlaying) {
+      <section class="player">
+        <h3>🎵 Now Playing: {{ currentlyPlaying.name }}</h3>
+        <audio #audioPlayer controls [src]="currentlyPlaying.url" class="audio-player">
+          Your browser does not support the audio element.
+        </audio>
+      </section>
+    }
+  </main>
+</div>

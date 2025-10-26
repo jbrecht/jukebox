@@ -7,54 +7,7 @@ import { S3Service, S3Folder, S3File } from './services/s3.service';
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, HttpClientModule],
-  template: `
-    <div class="app">
-      <header class="header">
-        <h1>�� S3 Music Jukebox</h1>
-        <p>Browse and play music from your S3 bucket</p>
-      </header>
-      
-      <main class="main">
-        <section class="folders">
-          <h2>📁 Folders</h2>
-          <div class="folder-grid">
-            @for (folder of folders; track folder.prefix) {
-              <div class="folder-card" (click)="selectFolder(folder)">
-                {{ folder.name }}
-              </div>
-            }
-          </div>
-        </section>
-        
-        @if (selectedFolder) {
-          <section class="files">
-            <h2>🎵 Files in {{ selectedFolder.name }}</h2>
-            <div class="file-list">
-              @for (file of files; track file.key) {
-                <div class="file-item">
-                  <span class="file-name" (click)="playFile(file)">{{ file.name }}</span>
-                  <div class="file-actions">
-                    <small>{{ s3Service.formatFileSize(file.size) }}</small>
-                    <button class="play-btn" (click)="playFile(file)">▶️</button>
-                    <a [href]="file.url" [download]="file.name" class="download-btn">⬇️</a>
-                  </div>
-                </div>
-              }
-            </div>
-          </section>
-        }
-        
-        @if (currentlyPlaying) {
-          <section class="player">
-            <h3>🎵 Now Playing: {{ currentlyPlaying.name }}</h3>
-            <audio #audioPlayer controls [src]="currentlyPlaying.url" class="audio-player">
-              Your browser does not support the audio element.
-            </audio>
-          </section>
-        }
-      </main>
-    </div>
-  `,
+  templateUrl: './app.component.html',
   styles: [`
     .app {
       padding: 20px;
@@ -65,9 +18,20 @@ import { S3Service, S3Folder, S3File } from './services/s3.service';
       text-align: center;
       margin-bottom: 40px;
     }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+    .logo {
+      height: 60px;
+      width: auto;
+    }
     .header h1 {
       font-size: 2.5rem;
-      margin-bottom: 10px;
+      margin: 0;
     }
     .folder-grid {
       display: grid;
@@ -149,7 +113,7 @@ import { S3Service, S3Folder, S3File } from './services/s3.service';
   `]
 })
 export class AppComponent implements OnInit {
-  title = 'S3 Music Jukebox';
+  title = 'Tasty Jukebox';
   folders: S3Folder[] = [];
   files: S3File[] = [];
   selectedFolder: S3Folder | null = null;
