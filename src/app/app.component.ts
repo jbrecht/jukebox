@@ -49,6 +49,13 @@ export class AppComponent implements OnInit {
     this.duration = 0;
     this.progress = 0;
     console.log('Playing:', file.name, 'from URL:', file.url);
+    
+    // Auto-play after a short delay to ensure the audio element is ready
+    setTimeout(() => {
+      if (this.audioPlayer?.nativeElement && this.currentlyPlaying === file) {
+        this.audioPlayer.nativeElement.play();
+      }
+    }, 100);
   }
 
   // Audio event handlers
