@@ -254,7 +254,19 @@
   margin-bottom: 20px;
   padding-bottom: 15px;
   border-bottom: 2px solid rgba(255,255,255,0.2);
-  h2 { margin: 0; font-size: 1.4rem; font-weight: 600; }
+  h2 { 
+    margin: 0; 
+    font-size: 1.4rem; 
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
+.section-icon {
+  height: 96px;
+  width: 96px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
 .track-count {
   background: rgba(255,255,255,0.2);
@@ -284,7 +296,6 @@
     transform: translateX(5px);
   }
 }
-.folder-icon { font-size: 1.5rem; animation: rotate 4s linear infinite; }
 .folder-name { font-weight: 600; font-size: 1.1rem; }
 
 /* Tracks */
@@ -315,7 +326,13 @@
   gap: 15px;
   flex-grow: 1;
 }
-.track-icon { font-size: 1.5rem; animation: rotate 3s ease-in-out infinite; }
+.track-icon { 
+  font-size: 1.5rem; 
+  transition: transform 0.3s ease;
+}
+.track-icon.playing { 
+  animation: rotate 3s ease-in-out infinite; 
+}
 .track-name {
   font-weight: 600;
   font-size: 1.1rem;
